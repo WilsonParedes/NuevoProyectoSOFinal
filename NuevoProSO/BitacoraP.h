@@ -11,18 +11,20 @@ class BitacoraP {
 private:
     string NoProceso;
     string TemaEjecucion;
-    PrioridadProceso pp;
+    string pp;
     string paternidad;
     string tiempoejecución;
+    string estadoproceso;
 
 public:
 
-    BitacoraP(string NoProceso, string TemaEjecucion, PrioridadProceso pp, string paternidad, string tiempoejecucion) {
+    BitacoraP(string NoProceso, string TemaEjecucion, string pp, string paternidad, string tiempoejecucion, string estadoproceso) {
         this->NoProceso = NoProceso;
         this->TemaEjecucion = TemaEjecucion;
         this->pp = pp;
         this->paternidad = paternidad;
         this->tiempoejecución = tiempoejecucion;
+        this->estadoproceso = estadoproceso;
     }
 
     void setNoProceso(string NoProceso) {
@@ -31,7 +33,7 @@ public:
     void setTemaEjecucion(string TemaEjecucion) {
         this->TemaEjecucion = TemaEjecucion;
     }
-    void setPrioridadProceso(PrioridadProceso pp) {
+    void setPrioridadProceso(string pp) {
 
         this->pp = pp;
     }
@@ -42,13 +44,17 @@ public:
         this->tiempoejecución = tiempoejecución;
     }
 
+    void setEstadoProceso(string estadoproceso) {
+        this->estadoproceso = estadoproceso;
+    }
+
     string getNoProceso() {
         return NoProceso;
     }
     string getTemaEjecucion() {
         return TemaEjecucion;
     }
-    PrioridadProceso getPrioridadProceso() {
+    string getPrioridadProceso() {
         return pp;
     }
     string getPaternidad() {
@@ -57,9 +63,11 @@ public:
     string getTiempoEjecucion() {
         return tiempoejecución;
     }
-
+    string getEstadoProceso() {
+        return estadoproceso;
+    }
     string toString() {
-        return NoProceso + "\t\t" + " | " + TemaEjecucion + "\t\t" + " | " + paternidad + "\t\t" + " | " + tiempoejecución;
+        return NoProceso + "\t\t" + " | " + TemaEjecucion + "\t\t" + " | " + pp + "\t\t" + " | " + paternidad +"\t\t" + " | " + tiempoejecución + "\t\t\t" + " | "+ estadoproceso;
     }
 
 

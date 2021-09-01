@@ -48,7 +48,7 @@ void RoundRobin(char datos[], int tiempo[], int numero) {
             tiempoFinal += Quantum;
             cout << "el tiempo de nuevo de " << datos[i] << ": "
                 << tiempoFinal << endl;
-            procesos.agregarProceso(BitacoraP::BitacoraP("1", "hola", PrioridadProceso::LISTO, "1", "25"));
+            procesos.agregarProceso(BitacoraP::BitacoraP("1", "hola", "", "1", "25","3"));
 
         }
         else {
@@ -56,7 +56,7 @@ void RoundRobin(char datos[], int tiempo[], int numero) {
             sumatoria += tiempoFinal;
             cout << "el tiempo de proceso de " << datos[i] << ": "
                 << tiempoFinal << endl;
-            procesos.agregarProceso(BitacoraP::BitacoraP("2", "quetal", PrioridadProceso::LISTO, "2", "30"));
+            procesos.agregarProceso(BitacoraP::BitacoraP("2", "quetal", "", "2", "30","1"));
             metalera++;
         }
         i < (numero - 1) ? i++ : i = 0;

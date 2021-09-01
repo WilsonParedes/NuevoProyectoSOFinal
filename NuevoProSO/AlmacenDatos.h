@@ -40,7 +40,7 @@ public:
 	}
 
 	void mostrarProcesos() {
-		cout << "No. Proceso\t | Tema\t\t | Paternidad\t | Tiempo Ejecucion";
+		cout << "No. Proceso\t | Tema\t\t\t | Prioridad\t | Paternidad | Tiempo de Ejecución\t | Estado del Proceso ";
 		cout << endl;
 		for (int i = 0; i < almacen.size(); i++) {
 			cout << almacen[i].toString();
@@ -50,7 +50,7 @@ public:
 
 	void mostrarProcesosContenedroTXT() {
 		system("cls");
-		cout << "No. Proceso\t | Tema\t\t\t | Paternidad\t | Tiempo Ejecucion";
+		cout << "No. Proceso\t | Tema\t\t\t | Prioridad\t | Paternidad\t | Tiempo de Ejecución\t | Estado del Proceso ";
 		cout << endl;
 		for (int i = 0; i < ContenedorTXT.size(); i++) {
 			cout << ContenedorTXT[i].toString();
@@ -64,7 +64,7 @@ public:
 	void LeerFichero() {// Procedimiento para imprimir el inventario en pantalla.
 			string temp;
 			string temNoProceso, tempTema, tempEstado,tempPaternidad,tempTiempo;
-			PrioridadProceso pp = PrioridadProceso();
+			string pp;
 			string leer; // se declaran 2 variables una para abrir el fichero y otra para almacenar la información que se encuentra en el fichero
 			int cont = 0;
 			l.open("Inventario.txt", ios::in);//se abre el fichero
@@ -89,9 +89,9 @@ public:
 						temNoProceso = temp;
 					}if (cont == 1) {
 						tempTema = temp;
-					}/*if (cont == 2) {
-						pp = PrioridadProceso::LISTO;
-					}*/if (cont == 3) {
+					}if (cont == 2) {
+						pp = temp;
+					}if (cont == 3) {
 						tempPaternidad = temp;
 					}if (cont == 4) {
 						tempTiempo = temp;
@@ -99,58 +99,73 @@ public:
 
 					cont++;
 				}
-				agregarProcesoaContenedorTXT(BitacoraP::BitacoraP(temNoProceso, tempTema, PrioridadProceso::NUEVO, tempPaternidad, tempTiempo));
+				agregarProcesoaContenedorTXT(BitacoraP::BitacoraP(temNoProceso, tempTema, pp, tempPaternidad, tempTiempo,"NUEVO"));
 			}l.close();	// fin de la lectura del fichero	
 
 
 			mostrarProcesosContenedroTXT(); 
 			int casteo,casteo2, k = 0;
-			
+			bool salida = false;
 			string temporal;
-			for (int i = 0; i < ContenedorTXT.size(); i++) {
-				for (int j = 0; j < 5; j++) {
-					if (j == 4) {
-						k = 0;
-						agregarProceso(BitacoraP::BitacoraP(ContenedorTXT[i].getNoProceso(), ContenedorTXT[i].getTemaEjecucion(),PrioridadProceso::LISTO, ContenedorTXT[i].getPaternidad(), ContenedorTXT[i].getTiempoEjecucion()));
-						temporal = ContenedorTXT[i].getTiempoEjecucion();
-						
-						casteo = atoi(temporal.c_str());
-						if (casteo > 20) {
-							casteo2 = atoi(temporal.c_str()) - 20;
-							ContenedorTXT[i].setTiempoEjecucion(to_string(casteo2));
-							agregarProceso(BitacoraP::BitacoraP(ContenedorTXT[i].getNoProceso(), ContenedorTXT[i].getTemaEjecucion(), PrioridadProceso::EJECUCION, ContenedorTXT[i].getPaternidad(), ContenedorTXT[i].getTiempoEjecucion()));
+			do {
+				for (int i = 0; i < ContenedorTXT.size(); i++) {
+					salida = false;
+					for (int j = 0; j < 5; j++) {
+						if (j == 4) {
+							temporal = ContenedorTXT[i].getTiempoEjecucion();
+							casteo = atoi(temporal.c_str());
+							if (casteo <= 0) {
 
-							cout << endl << "se esta ejecucantdo el proceso : " << ContenedorTXT[i].getNoProceso() << " ";
-							for (k = 0; k < 20; k++) {
-								cout << (k+1) << " ";
-								Sleep(1000);
 							}
-							cout << endl << "Proceso Bloqueado, Tiempo restante : " << ContenedorTXT[i].getTiempoEjecucion() << endl;
-							cout << endl;
-						}
+							else {
+								if (ContenedorTXT[i].getEstadoProceso()._Equal("NUEVO")) {
+									agregarProceso(BitacoraP::BitacoraP(ContenedorTXT[i].getNoProceso(), ContenedorTXT[i].getTemaEjecucion(), ContenedorTXT[i].getPrioridadProceso(), ContenedorTXT[i].getPaternidad(), ContenedorTXT[i].getTiempoEjecucion(),"NUEVO"));
+									
+								}
+								agregarProceso(BitacoraP::BitacoraP(ContenedorTXT[i].getNoProceso(), ContenedorTXT[i].getTemaEjecucion(), ContenedorTXT[i].getPrioridadProceso(), ContenedorTXT[i].getPaternidad(), ContenedorTXT[i].getTiempoEjecucion(),"LISTO"));
+								k = 0;
+								if (casteo > 20) {
+									salida = true;
+									agregarProceso(BitacoraP::BitacoraP(ContenedorTXT[i].getNoProceso(), ContenedorTXT[i].getTemaEjecucion(), ContenedorTXT[i].getPrioridadProceso(), ContenedorTXT[i].getPaternidad(), ContenedorTXT[i].getTiempoEjecucion(),"EJECUCION"));
+									casteo2 = atoi(temporal.c_str()) - 20;
+									ContenedorTXT[i].setTiempoEjecucion(to_string(casteo2));
+									ContenedorTXT[i].setEstadoProceso("EJECUCION");
+									cout << endl << "se esta ejecucantdo el proceso : " << ContenedorTXT[i].getNoProceso() << " ";
+									for (k = 0; k < 20; k++) {
+										cout << (k + 1) << " ";
+										Sleep(1000);
+									}
+									cout << endl << "Proceso Bloqueado, Tiempo restante : " << ContenedorTXT[i].getTiempoEjecucion() << endl;
+									cout << endl;
+									agregarProceso(BitacoraP::BitacoraP(ContenedorTXT[i].getNoProceso(), ContenedorTXT[i].getTemaEjecucion(), ContenedorTXT[i].getPrioridadProceso(), ContenedorTXT[i].getPaternidad(), ContenedorTXT[i].getTiempoEjecucion(),"BLOQUEADO"));
+								}
 
-						if (casteo <= 0) {
-							ContenedorTXT[i].setTiempoEjecucion("0");
-							agregarProceso(BitacoraP::BitacoraP(ContenedorTXT[i].getNoProceso(), ContenedorTXT[i].getTemaEjecucion(), PrioridadProceso::EJECUCION, ContenedorTXT[i].getPaternidad(), ContenedorTXT[i].getTiempoEjecucion()));
-						}
-						if (casteo <= 20) {
-							casteo2 = atoi(temporal.c_str() - atoi(temporal.c_str()));
-							ContenedorTXT[i].setTiempoEjecucion(to_string(casteo2));
-							agregarProceso(BitacoraP::BitacoraP(ContenedorTXT[i].getNoProceso(), ContenedorTXT[i].getTemaEjecucion(), PrioridadProceso::EJECUCION, ContenedorTXT[i].getPaternidad(), ContenedorTXT[i].getTiempoEjecucion()));
-							cout << endl << "se esta ejecucantdo el proceso : " << ContenedorTXT[i].getNoProceso() << " ";
-							for (k = 0; k < casteo; k++) {
-									cout << (k+1) << " ";
-									Sleep(1000);
+								if (casteo <= 0) {
+									/*ContenedorTXT[i].setTiempoEjecucion("0");
+									agregarProceso(BitacoraP::BitacoraP(ContenedorTXT[i].getNoProceso(), ContenedorTXT[i].getTemaEjecucion(), PrioridadProceso::EJECUCION, ContenedorTXT[i].getPaternidad(), ContenedorTXT[i].getTiempoEjecucion()));*/
+								}
+								if (casteo <= 20) {
+									agregarProceso(BitacoraP::BitacoraP(ContenedorTXT[i].getNoProceso(), ContenedorTXT[i].getTemaEjecucion(), ContenedorTXT[i].getPrioridadProceso(), ContenedorTXT[i].getPaternidad(), ContenedorTXT[i].getTiempoEjecucion(),"EJECUCION"));
+									casteo2 = atoi(temporal.c_str() - atoi(temporal.c_str()));
+									ContenedorTXT[i].setTiempoEjecucion(to_string(casteo2));
+
+									cout << endl << "se esta ejecucantdo el proceso : " << ContenedorTXT[i].getNoProceso() << " ";
+									for (k = 0; k < casteo; k++) {
+										cout << (k + 1) << " ";
+										Sleep(1000);
+									}
+									cout << endl << "Proceso Terminado : " << ContenedorTXT[i].getTiempoEjecucion() << endl;
+									agregarProceso(BitacoraP::BitacoraP(ContenedorTXT[i].getNoProceso(), ContenedorTXT[i].getTemaEjecucion(), ContenedorTXT[i].getPrioridadProceso(), ContenedorTXT[i].getPaternidad(), ContenedorTXT[i].getTiempoEjecucion(),"TERMINADO"));
+									ContenedorTXT[i].setEstadoProceso("TERMINADO");
+								}
+							
 							}
-								cout << endl << "Proceso Terminado : " << ContenedorTXT[i].getTiempoEjecucion() << endl;
-								
-
+							
 						}
 					}
-				}
-				
-			}
 
+				}
+			} while (salida);
 			mostrarProcesos();
 		}
 };
