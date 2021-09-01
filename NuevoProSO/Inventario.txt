@@ -1,0 +1,5 @@
+6789|aceite|LISTO|2|25
+9878|atunes|LISTO|1|30
+0|perro|LISTO|3|20
+9876|jabon|LISTO|4|11
+2345|salsa|LISTO|2|50
