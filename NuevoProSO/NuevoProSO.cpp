@@ -83,16 +83,18 @@ int main() {
         cin >> op;
 
         switch (op) {
-     
+
         case 1:
             procesos.LeerFichero();
             break;
         case 2:
-            RoundRobin(datos, tiempo, limite);
+            /*RoundRobin(datos, tiempo, limite);
             cin.get();
             cin.get();
             exit = false;
-            break;
+            break;*/
+            system("cls");
+            procesos.EjecutarProcesos();
             break;
         case 3:
           
