@@ -15,16 +15,21 @@ private:
     string paternidad;
     string tiempoejecución;
     string estadoproceso;
+    string tiempopendiente;
+    int hijopendiente;
 
 public:
 
-    BitacoraP(string NoProceso, string TemaEjecucion, string pp, string paternidad, string tiempoejecucion, string estadoproceso) {
+    BitacoraP(string NoProceso, string TemaEjecucion, string pp, string paternidad, string tiempoejecucion, string tiempopendiente, string estadoproceso, int hijopendiente) {
         this->NoProceso = NoProceso;
         this->TemaEjecucion = TemaEjecucion;
         this->pp = pp;
         this->paternidad = paternidad;
         this->tiempoejecución = tiempoejecucion;
         this->estadoproceso = estadoproceso;
+        this->tiempopendiente = tiempopendiente;
+        this->hijopendiente = hijopendiente;
+        
     }
 
     void setNoProceso(string NoProceso) {
@@ -48,6 +53,14 @@ public:
         this->estadoproceso = estadoproceso;
     }
 
+    void setTiempoPendiente(string tiempopendiente) {
+        this->tiempopendiente = tiempopendiente;
+    }
+
+    void setHijoPendiente(int hijopendiente) {
+        this->hijopendiente = hijopendiente;
+    }
+
     string getNoProceso() {
         return NoProceso;
     }
@@ -66,8 +79,17 @@ public:
     string getEstadoProceso() {
         return estadoproceso;
     }
+
+    string getTiempoPendiente() {
+        return tiempopendiente;
+    }
+
+    int getHijoPendiente() {
+        return hijopendiente;
+    }
+
     string toString() {
-        return NoProceso + "\t\t" + " | " + TemaEjecucion + "\t\t" + " | " + pp + "\t\t" + " | " + paternidad +"\t\t" + " | " + tiempoejecución + "\t\t\t" + " | "+ estadoproceso;
+        return NoProceso + "\t\t" + " | " + TemaEjecucion + "\t\t" + " | " + pp + "\t\t" + " | " + paternidad +"\t\t" + " | " + tiempoejecución + "\t\t\t" + " | "+ tiempopendiente + "\t\t | " + estadoproceso;
     }
 
 

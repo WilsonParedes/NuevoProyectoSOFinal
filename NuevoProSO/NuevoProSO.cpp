@@ -48,7 +48,7 @@ void RoundRobin(char datos[], int tiempo[], int numero) {
             tiempoFinal += Quantum;
             cout << "el tiempo de nuevo de " << datos[i] << ": "
                 << tiempoFinal << endl;
-            procesos.agregarProceso(BitacoraP::BitacoraP("1", "hola", "", "1", "25","3"));
+            //procesos.agregarProceso(BitacoraP::BitacoraP("1", "hola", "", "1", "25","3"));
 
         }
         else {
@@ -56,7 +56,7 @@ void RoundRobin(char datos[], int tiempo[], int numero) {
             sumatoria += tiempoFinal;
             cout << "el tiempo de proceso de " << datos[i] << ": "
                 << tiempoFinal << endl;
-            procesos.agregarProceso(BitacoraP::BitacoraP("2", "quetal", "", "2", "30","1"));
+            //procesos.agregarProceso(BitacoraP::BitacoraP("2", "quetal", "", "2", "30","1"));
             metalera++;
         }
         i < (numero - 1) ? i++ : i = 0;
@@ -75,11 +75,12 @@ int main() {
     do {
         op = 0;
         exit = false;
-        cout << "Ingrese la opción que desee " << endl;
-        cout << "1--> Leer Archivo " << endl;
-        cout << "2--> Ver Procesador " << endl;
-        cout << "3--> Verificar Bitacora " << endl;
-        cout << "4--> Salir " << endl;
+        cout << "*****BIENVENIDO AL SIMULADOR PCB***** " << endl;
+        cout << "1--> LEER ARCHIVO " << endl;
+        cout << "2--> ATENDER PROCESOS " << endl;
+        cout << "3--> IMPRIMIR BITACORA " << endl;
+        cout << "4--> SALIR " << endl;
+        cout << "INGRESE LA OPCIÓN QUE DESEE " << endl;
         cin >> op;
 
         switch (op) {
@@ -98,13 +99,13 @@ int main() {
             break;
         case 3:
           
-            procesos.mostrarProcesosContenedroTXT();
+            procesos.mostrarProcesos();
             break;
         case 4:
             exit = true;
          
         default:
-            cout << "Ingreso una opción incorrecta";
+            cout << endl << "Ingreso una opcion incorrecta" << endl<<endl;
          
         }
     } while (!exit);
