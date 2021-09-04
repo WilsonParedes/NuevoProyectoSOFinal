@@ -150,7 +150,7 @@ public:
 			string pp;
 			string leer; // se declaran 2 variables una para abrir el fichero y otra para almacenar la información que se encuentra en el fichero
 			int cont = 0;
-			l.open("Inventario.txt", ios::in);//se abre el fichero
+			l.open("PCB.txt", ios::in);//se abre el fichero
 			if (l.fail()) {// muestra error en caso el fichero este dañado o no exista
 				cout << endl << "El archivo no se pudo abrir, puede que este danado o no exista, compruebe que en la carpeta se encuentre el archivo PCB.txt"<< endl;
 				
@@ -162,8 +162,6 @@ public:
 				cont = 0;
 				
 				getline(l, leer);// almacena la información del fichero en la variable leer 
-				//cout << leer << "\n";// se imprime en pantalla, guarda el formato exacto de como se encuentra en el fichero.
-
 
 				stringstream input_stringstream(leer);
 
@@ -261,6 +259,9 @@ public:
 								cout << endl << "se esta ejecucantdo el proceso hijo " + to_string(contador) + " : --> ";
 								tiempohijos = atoi(ContenedorTXTAuxiliar[l].getTiempoEjecucion().c_str());
 								agregarProceso(BitacoraP::BitacoraP(ContenedorTXTAuxiliar[l].getNoProceso(), ContenedorTXTAuxiliar[l].getTemaEjecucion(), ContenedorTXTAuxiliar[l].getPrioridadProceso(), ContenedorTXTAuxiliar[l].getPaternidad(), ContenedorTXTAuxiliar[l].getTiempoEjecucion(), ContenedorTXTAuxiliar[l].getTiempoPendiente(), "EJECUCION", ContenedorTXTAuxiliar[l].getHijoPendiente()));
+								if (tiempohijos < 0) {
+									tiempohijos = 1;
+								}
 								for (int k = 0; k < tiempohijos; k++) {
 									cout << (k + 1) << " ";
 									Sleep(1000);
@@ -316,9 +317,11 @@ public:
 			int tiempohijos = 0;
 			int contador = 0;
 			int hijospendientes = 0;
+			int dormir = 0;
 			try {
 				
 				for (int l = 0; l < prioridad; l++) {
+					dormir = 1000;
 					contador++;
 					hijospendientes = prioridad - contador;
 					ContenedorTXTAuxiliar[l].setTiempoPendiente(to_string(casteo2));
@@ -326,9 +329,13 @@ public:
 					cout << endl << "se esta ejecucantdo el proceso hijo " + to_string(contador) + " : --> ";
 					tiempohijos = atoi(ContenedorTXTAuxiliar[l].getTiempoEjecucion().c_str());
 					agregarProceso(BitacoraP::BitacoraP(ContenedorTXTAuxiliar[l].getNoProceso(), ContenedorTXTAuxiliar[l].getTemaEjecucion(), ContenedorTXTAuxiliar[l].getPrioridadProceso(), ContenedorTXTAuxiliar[l].getPaternidad(), ContenedorTXTAuxiliar[l].getTiempoEjecucion(), ContenedorTXTAuxiliar[l].getTiempoPendiente(), "EJECUCION", hijospendientes));
+					if (tiempohijos <= 0) {
+						tiempohijos = 1;
+						dormir = 500;
+					}
 					for (int k = 0; k < tiempohijos; k++) {
 						cout << (k + 1) << " ";
-						Sleep(1000);
+						Sleep(dormir);
 					}
 					cout << endl << "Proceso hijo " + to_string(contador) + " Terminado : " << ContenedorTXTAuxiliar[l].getTiempoPendiente() << endl;
 					agregarProceso(BitacoraP::BitacoraP(ContenedorTXTAuxiliar[l].getNoProceso(), ContenedorTXTAuxiliar[l].getTemaEjecucion(), ContenedorTXTAuxiliar[l].getPrioridadProceso(), ContenedorTXTAuxiliar[l].getPaternidad(), ContenedorTXTAuxiliar[l].getTiempoEjecucion(), ContenedorTXTAuxiliar[l].getTiempoPendiente(), "TERMINADO", hijospendientes));
